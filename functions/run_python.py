@@ -39,8 +39,6 @@ def run_python_file(working_directory, file_path, args=[]):
     
     try:
         full_args = ["python", file_path, *args]
-        print(f"cwd: {working_abs}")
-        print(f"args={full_args}")
         result = subprocess.run(full_args, capture_output=True, cwd=working_directory, timeout=30)
         output = []
         if result.stdout:
@@ -55,5 +53,5 @@ def run_python_file(working_directory, file_path, args=[]):
     except Exception as e:
         return f"Error: executing Python file: {e}"
 
-if __name__ == "__main__":
-    print(run_python_file("../calculator", "main.py", ["3 + 5"]))
+# if __name__ == "__main__":
+#     print(run_python_file("../calculator", "main.py", ["3 + 5"]))

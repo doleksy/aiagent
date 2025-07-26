@@ -6,7 +6,7 @@ from .config import FILE_CHARACTER_LIMIT
 
 schema_get_file_content = types.FunctionDeclaration(
     name="get_file_content",
-    description="Read the contents of the specified file, constrained to the working directory.",
+    description=f"Reads and returns the first {FILE_CHARACTER_LIMIT} characters of the content from a specified file within the working directory.",
     parameters=types.Schema(
         type=types.Type.OBJECT,
         properties={
@@ -19,6 +19,7 @@ schema_get_file_content = types.FunctionDeclaration(
 )
 
 def get_file_content(working_directory, file_path):
+    print(f"{working_directory} {file_path}")
     target = os.path.join(working_directory, file_path)
     target_abs = os.path.abspath(target)
 
@@ -40,5 +41,5 @@ def get_file_content(working_directory, file_path):
     except OSError as e:
         return f"Error: file reading error: {e}"
     
-if __name__ == "__main__":
-    print(get_file_content("../calculator", "main.py"))
+# if __name__ == "__main__":
+#     print(get_file_content("../calculator", "main.py"))

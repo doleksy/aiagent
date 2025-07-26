@@ -44,5 +44,5 @@ def write_file(working_directory, file_path, content):
 
     return f'Successfully wrote to "{file_path}" ({len(content)} characters written)'
 
-if __name__ == "__main__":
-    print(write_file("../calculator", "blah/dolek.txt", "blah"))
+# if __name__ == "__main__":
+#     print(write_file("../calculator", "blah/dolek.txt", "blah"))

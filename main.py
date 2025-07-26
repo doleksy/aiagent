@@ -27,24 +27,32 @@ def main():
     messages = [
         types.Content(role="user", parts = [types.Part(text=sys.argv[1])]),
     ]
-    response = client.models.generate_content(
-        model="gemini-2.0-flash-001",
-        contents=messages,
-        config=types.GenerateContentConfig(
-            tools=[available_functions], system_instruction=system_prompt
-        ),
-    )
+    for iteration in range(0,20):
+        try:
+            response = client.models.generate_content(
+                model="gemini-2.0-flash-001",
+                contents=messages,
+                config=types.GenerateContentConfig(
+                    tools=[available_functions], system_instruction=system_prompt
+                ),
+            )
+            for candidate in response.candidates:
+                messages.append(candidate.content)
 
-    if verbose:
-        print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
-        print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
+            if verbose:
+                print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
+                print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
 
-    if not response.function_calls:
-        print(response.text)
-    else:
-        for function_call_part in response.function_calls:
-            #print(f"Calling function: {function_call_part.name}({function_call_part.args})")
-            call_function(function_call_part, verbose)
+            if not response.function_calls:
+                print(response.text)
+                break
+            else:
+                for function_call_part in response.function_calls:
+                    #print(f"Calling function: {function_call_part.name}({function_call_part.args})")
+                    function_responses = call_function(function_call_part, verbose)
+                    messages.append(function_responses)
+        except Exception as e:
+            print(f"Error: generation loop, iteration-{iteration}: {e}")
 
 
 if __name__ == "__main__":

@@ -46,5 +46,5 @@ def get_files_info(working_directory, directory="."):
 
     return contents_str
 
-if __name__ == "__main__":
-    print(get_files_info("../calculator", "."))
+# if __name__ == "__main__":
+#     print(get_files_info("../calculator", "."))
