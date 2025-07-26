@@ -2,7 +2,7 @@ import os
 
 from google.genai import types
 
-from .config import FILE_CHARACTER_LIMIT
+from config import FILE_CHARACTER_LIMIT
 
 schema_get_file_content = types.FunctionDeclaration(
     name="get_file_content",
